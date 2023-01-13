@@ -12,7 +12,7 @@
         TimeScale,
     } from 'chart.js';
     import 'chartjs-adapter-date-fns';
-    import { ChartService } from '../services/chartService.ts';
+    import { ChartService } from '../services/ChartService/chartService.ts';
     import { DataLoader } from '../services/dataLoader.ts';
     import { afterUpdate } from 'svelte';
 

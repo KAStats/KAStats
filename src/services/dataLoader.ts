@@ -1,10 +1,10 @@
 import * as iso88592 from 'iso-8859-2';
 import { Parser } from './parser';
-import type { AllNorms, ChartDataSet, ExamMeta, FileData, NormValue, Results } from '../types/types';
+import type { AllNorms, ChartDataSet, ExamMeta, FileData } from '../types/types';
 import type { FileSystemDirectoryHandle } from 'wicg-file-system-access';
 import type { Dictionary } from '../types/global';
 import { getOkNorm, isOff } from './normsUtils';
-import { ChartService } from './chartService';
+import { ChartService } from './ChartService/chartService';
 
 export class DataLoader {
     private static instance: DataLoader;
