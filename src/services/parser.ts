@@ -72,7 +72,7 @@ export const Parser =
             const timeRes = htmlPart.match(/Czas badania: ([^\<]*)\</);
             const timeStr = timeRes ?
                 clearWhitespace(timeRes[1]) : '';
-            const d = timeStr.match(/^([0-9]+)\/([0-9]+)\/([0-9]+) ([0-9]+):([0-9]+)$/);
+            const d = timeStr.match(/^([0-9]+)[\/\.]([0-9]+)[\/\.]([0-9]+) ([0-9]+):([0-9]+)$/);
             const time = new Date(`${d[3]}.${d[2]}.${d[1]} ${d[4]}:${d[5]}`).getTime();
             return {
                 fileName,

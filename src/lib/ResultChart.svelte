@@ -35,7 +35,7 @@
             const chartService = new ChartService();
             const filteredChartData = chartService.filterChartDataSetByTime(fromDate, toDate, resultsChartData);
             data = chartService.getChartData(title, subTitle, filteredChartData);
-            options = chartService.getChartOptions(title, subTitle, filteredChartData, fromDate, toDate);
+            options = chartService.getChartOptions(filteredChartData, fromDate, toDate);
         }
     })
 
@@ -52,8 +52,11 @@
 </script>
 
 {#if data}
-    <div class="chart-container">
-        <Line {data} {options}/>
+    <div class="chart-wrapper">
+        <div>{subTitle}</div>
+        <div class="chart-container">
+            <Line {data} {options}/>
+        </div>
     </div>
 {/if}
 

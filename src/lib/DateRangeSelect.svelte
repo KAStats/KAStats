@@ -6,7 +6,7 @@
     let from = getDateChangedByDays(-21);
     let to = new Date();
 
-    $:fromMax = getDateChangedByDays(-1, to);
+    $:fromMax = getDateChangedByDays(0, to);
     $:toMin = getDateChangedByDays(1, from);
 
     const dispatch = createEventDispatcher();

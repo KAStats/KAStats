@@ -3,6 +3,7 @@ import { getOkNorm } from '../normsUtils';
 import { CHART_COLORS } from './constants';
 import { getColorFunction } from './utils';
 import { ChartGradient } from './ChartGradient';
+import { isDarkMode } from '../utils';
 
 export class ChartService {
     public getChartData(title: string, subTitle: string, chartDataSet: ChartDataSet) {
@@ -12,9 +13,8 @@ export class ChartService {
         return this.getData(subTitle, labels, values, chartDataSet.norms);
     }
 
-    public getChartOptions(title: string, subTitle: string, chartDataSet: ChartDataSet, from: Date, to: Date) {
-        // console.log('--->>> ChartService.getChartData', title, subTitle, chartDataSet);
-        return this.getOptions(subTitle, chartDataSet, from, to);
+    public getChartOptions(chartDataSet: ChartDataSet, from: Date, to: Date) {
+        return this.getOptions(chartDataSet, from, to);
     }
 
     public filterChartDataSetByTime(from: Date, to: Date, chartDataSet: ChartDataSet): ChartDataSet {
@@ -80,18 +80,13 @@ export class ChartService {
         };
     };
 
-    private getOptions(title: string, chartDataSet: ChartDataSet, from: Date, to: Date) {
+    private getOptions(chartDataSet: ChartDataSet, from: Date, to: Date) {
         const vScale = this.recountVScale(chartDataSet);
         return {
             // responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: false,
-                title: {
-                    display: true,
-                    text: title,
-                    color: CHART_COLORS.white
-                }
+                legend: false
             },
             scales: {
                 x: {
@@ -129,7 +124,9 @@ export class ChartService {
                             enabled: true
                         },
                         color: function (context) {
-                            return context.tick && context.tick.major ? CHART_COLORS.white : CHART_COLORS.lightGrey;
+                            return context.tick && context.tick.major ?
+                                isDarkMode() ? CHART_COLORS.white : CHART_COLORS.darkGrey :
+                                isDarkMode() ? CHART_COLORS.lightGrey : CHART_COLORS.dark;
                         },
                         font: function (context) {
                             if (context.tick && context.tick.major) {
@@ -155,7 +152,9 @@ export class ChartService {
                             enabled: true
                         },
                         color: function (context) {
-                            return context.tick && context.tick.major ? CHART_COLORS.white : CHART_COLORS.lightGrey;
+                            return context.tick && context.tick.major ?
+                                isDarkMode() ? CHART_COLORS.white : CHART_COLORS.darkGrey :
+                                isDarkMode() ? CHART_COLORS.lightGrey : CHART_COLORS.dark;
                         },
                         font: function (context) {
                             if (context.tick && context.tick.major) {

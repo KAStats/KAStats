@@ -34,6 +34,9 @@
 
 <main>
     <div>
+        <div class="card">
+            Statystyki Kwantowego Analizatora V {__APP_VERSION__}
+        </div>
         {#if !isLoaded}
             <div class="card">
                 <DirLoader on:loaded={whenLoaded}/>

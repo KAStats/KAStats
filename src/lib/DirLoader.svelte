@@ -18,5 +18,5 @@
 </script>
 
 <button on:click={loadData}>
-    Otwórz katalog
+    Otwórz katalog z raportami
 </button>

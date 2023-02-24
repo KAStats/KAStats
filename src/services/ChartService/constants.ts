@@ -12,6 +12,7 @@ export const CHART_COLORS = {
     lightGrey: 'rgb(201, 203, 207)',
     grey: 'rgb(101, 103, 107)',
     darkGrey: 'rgb(49,49,51)',
+    dark: 'rgb(33,53,71)',
     white: 'rgb(255,255,255)'
 };
 export const NORM_LEVEL_TO_COLOR = {
