@@ -14,13 +14,15 @@ export const isInNorm = (norm: NormValue, value: number) => {
     throw new Error();
 }
 
-export const isOff = (norms: NormValue[], value: number) => {
-    const norm = norms.find(n => n.level === '-');
-    if (norm) {
-        return !isInNorm(norm, value);
-    }
-    for (const norm of norms) {
-        return isInNorm(norm, value);
+export const isOff = (norms: NormValue[] | undefined, value: number) => {
+    if (norms) {
+        const norm = norms.find(n => n.level === '-');
+        if (norm) {
+            return !isInNorm(norm, value);
+        }
+        for (const norm of norms) {
+            return isInNorm(norm, value);
+        }
     }
     console.log('--->>> isOff reportNorms', norms, value);
     throw new Error();
@@ -28,6 +30,9 @@ export const isOff = (norms: NormValue[], value: number) => {
 
 export const getOkNorm = (norms: NormValue[], noException = false): NormValue | null => {
     // console.log('--->>> getOkNorm norms', norms);
+    if (!norms) {
+        return null;
+    }
     const norm = norms.find(n => n.level === '-');
     if (norm) {
         return norm;

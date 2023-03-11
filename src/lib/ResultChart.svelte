@@ -64,7 +64,8 @@
     .chart-container {
         position: relative;
         margin: auto;
-        height: 40vh;
+        /*height: 40vh;*/
+        height: 300px;
         width: 80vw;
     }
 </style>

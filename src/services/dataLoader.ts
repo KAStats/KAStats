@@ -23,6 +23,11 @@ export class DataLoader {
 
     private chartsData: Dictionary<Dictionary<ChartDataSet>> = {};
 
+    private metaDataTitles = {
+        'Sylwetka':
+            { 'Waga': 'weight', 'BMI': 'bmi' }
+    };
+
     private constructor() {
     }
 
@@ -78,20 +83,16 @@ export class DataLoader {
                 data,
             };
             if (loadNormsAndTitles) {
-                this.reportNorms = norms;
-                // console.log('loadReportsFromDir reportNorms', JSON.stringify(this.reportNorms, null, '  '));
-                // throw new Error();
-
-                for (const title in this.reportNorms) {
-                    for (const subTitle in this.reportNorms[title]) {
-                        // console.log('---->>> loadReportsFromDir:', title, ':', subTitle, this.reportNorms[title]);
-                        if (!getOkNorm(this.reportNorms[title][subTitle], true)) {
-                            console.log('!!!---->>> Missing ok norm:', title, ':', subTitle, this.reportNorms[title][subTitle]);
+                for (const title in norms) {
+                    for (const subTitle in norms[title]) {
+                        if (!getOkNorm(norms[title][subTitle], true)) {
+                            console.log('!!!---->>> Missing ok norm:', title, ':', subTitle, norms[title][subTitle]);
                         }
                     }
                 }
-
-                // console.log('loadReportsFromDir titleStructure', JSON.stringify(this.titleStructure, null, '  '));
+                const fileMeta = this.reportMetas[file.name];
+                const metaNorms = Parser.getMetaNorms(fileMeta);
+                this.reportNorms = { ...norms, ...metaNorms };
             }
             loadNormsAndTitles = false;
         }
@@ -102,7 +103,7 @@ export class DataLoader {
         // TODO: refactor to service
         if (Object.keys(this.reportData).length > 0) {
             for (const fileName of this.filesOrderedByTime) {
-                const { time } = this.reportMetas[fileName];
+                const meta = this.reportMetas[fileName];
                 const report = this.reportData[fileName];
                 for (const title of Object.keys(report.data)) {
                     if (!this.chartsData[title]) {
@@ -127,17 +128,48 @@ export class DataLoader {
                             };
                         }
                         this.chartsData[title][subTitle].isOff.push(isOff(this.chartsData[title][subTitle].norms, dataRow.value));
-                        this.chartsData[title][subTitle].times.push(time);
+                        this.chartsData[title][subTitle].times.push(meta.time);
                         this.chartsData[title][subTitle].data.push(dataRow.value);
                     }
                 }
+                // Meta data (weight, bmi)
+                for (const title of Object.keys(this.metaDataTitles)) {
+                    if (!this.chartsData[title]) {
+                        this.chartsData[title] = {};
+                    }
+                    for (const subTitle of Object.keys(this.metaDataTitles[title])) {
+                        const subTitleMetaTag = this.metaDataTitles[title][subTitle];
+                        if (!this.chartsData[title][subTitle]) {
+                            this.chartsData[title][subTitle] = {
+                                norms: this.reportNorms[title][subTitle],
+                                times: [],
+                                data: [],
+                                isOff: [],
+                            };
+                        }
+                        this.chartsData[title][subTitle].times.push(meta.time);
+                        const value = meta[subTitleMetaTag];
+                        this.chartsData[title][subTitle].data.push(value);
+                        const isOffVal = subTitle === 'Waga' ? false : isOff(this.chartsData[title][subTitle].norms, value);
+                        this.chartsData[title][subTitle].isOff.push(isOffVal);
+                    }
+                }
+                // console.log('--->>> translateReportsToChartData', this.chartsData);
             }
 
-            this.titleStructure = Object
-                .keys(this.chartsData).reduce((res, title) => {
-                    res[title] = Object.keys(this.chartsData[title]);
-                    return res;
-                }, {} as Dictionary<string[]>);
+            const metaTitles = Object.keys(this.metaDataTitles).reduce((res, title) => {
+                res[title] = Object.keys(this.metaDataTitles[title]);
+                return res;
+            }, {} as Dictionary<string[]>);
+
+            this.titleStructure = {
+                ...metaTitles,
+                ...Object
+                    .keys(this.chartsData).reduce((res, title) => {
+                        res[title] = Object.keys(this.chartsData[title]);
+                        return res;
+                    }, {} as Dictionary<string[]>)
+            };
         }
     }
 

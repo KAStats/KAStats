@@ -5,6 +5,7 @@
     import { afterUpdate } from 'svelte';
     import DateRangeSelect from './lib/DateRangeSelect.svelte';
     import ReportHeader from './lib/ReportHeader.svelte';
+    import AppHelper from './lib/AppHelper.svelte';
 
     let isLoaded = false;
     let from: number;
@@ -40,6 +41,9 @@
         {#if !isLoaded}
             <div class="card">
                 <DirLoader on:loaded={whenLoaded}/>
+            </div>
+            <div class="card">
+                <AppHelper/>
             </div>
         {/if}
         {#if isLoaded}

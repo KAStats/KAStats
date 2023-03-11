@@ -1,5 +1,5 @@
 import type { NormValue } from '../../types/types';
-import { getValueColor } from './utils';
+import { getValueColor, levelToColor } from './utils';
 
 export class ChartGradient {
     private width = 0;
@@ -7,6 +7,10 @@ export class ChartGradient {
     private gradient;
 
     public getGradientColor(values: number[], norms: NormValue[]) {
+        if (!norms || norms.length === 0) {
+            return levelToColor('-', true);
+        }
+
         return (context) => {
             const min = Math.min(...values);
             const max = Math.max(...values);
@@ -28,18 +32,50 @@ export class ChartGradient {
             // Create the gradient because this is either the first render
             // or the size of the chart has changed
 
+
+            const minNorm = norms.reduce((res, row) => {
+                if (!res && row.min && row.max) {
+                    return row;
+                }
+                if (res && res.min && res.max && row.min && row.max && res.max - res.min > row.max - row.min) {
+                    return row;
+                }
+                return res;
+            }, null as NormValue | null);
+            if (!minNorm) {
+                throw new Error('Invalid minNorm value');
+            }
+            const step = (minNorm.max - minNorm.min) / 20;
+            // console.log('--->>> getGradient step', step);
+
             // console.log('--->>> getGradient', min, max, norms);
             const normMids = norms
                 .map(n => (n.min && n.max) ? (n.min + n.max) / 2 : n.min || n.max)
                 .filter(v => min < v && v < max)
                 .sort();
-            // console.log('--->>> getGradient normMids', normMids);
+            // console.log('--->>> getGradient normMids', JSON.stringify(normMids));
+            const normCols = norms
+                .reduce((res, n) => {
+                    // console.log('--->>> getGradient reduce n', JSON.stringify(n));
+                    if (n.min) {
+                        res.push(n.min + step);
+                    }
+                    if (n.max) {
+                        res.push(n.max - step);
+                    }
+                    res.push((n.min && n.max) ? (n.min + n.max) / 2 : n.min || n.max);
+                    // console.log('--->>> getGradient reduce res', JSON.stringify(res));
+                    return res;
+                }, [] as number[])
+                .filter(v => min < v && v < max)
+                .sort();
+            // console.log('--->>> getGradient normCols', JSON.stringify(normCols));
             const range = max - min;
-            const colorSets = normMids.map(v => ({
+            const colorSets = normCols.map(v => ({
                 offset: (v - min) / range,
                 color: getValueColor(norms, v),
             }));
-            // console.log('--->>> getGradient colorSets', colorSets);
+            // console.log('--->>> getGradient colorSets', JSON.stringify(colorSets));
 
             this.width = chartWidth;
             this.height = chartHeight;

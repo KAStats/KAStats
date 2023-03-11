@@ -3,7 +3,10 @@ import type { Dictionary } from './global.d.ts';
 export interface ExamMeta {
     sex: string;
     name: string;
-    age: string
+    age: number;
+    height: number;
+    weight: number;
+    bmi: number;
     time: number;
     fileName: string;
 }

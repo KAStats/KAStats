@@ -69,7 +69,10 @@ export const Parser =
             const nameRes = htmlPart.match(/Imie: ([^\<]*)\</);
             const sexRes = htmlPart.match(/Plec: ([^\<]*)\</);
             const ageRes = htmlPart.match(/Wiek: ([^\<]*)\</);
+            const shapeRes = htmlPart.match(/Sylwetka: ([0-9]*)cm,\s+([0-9]*)kg\</);
             const timeRes = htmlPart.match(/Czas badania: ([^\<]*)\</);
+            const height = shapeRes ? parseInt(shapeRes[1], 10) : 0;
+            const weight = shapeRes ? parseInt(shapeRes[2], 10) : 0;
             const timeStr = timeRes ?
                 clearWhitespace(timeRes[1]) : '';
             const d = timeStr.match(/^([0-9]+)[\/\.]([0-9]+)[\/\.]([0-9]+) ([0-9]+):([0-9]+)$/);
@@ -78,9 +81,96 @@ export const Parser =
                 fileName,
                 name: nameRes ? nameRes[1] : '',
                 sex: sexRes ? sexRes[1] : '',
-                age: ageRes ? ageRes[1] : '',
+                age: ageRes ? parseInt(ageRes[1], 10) : 0,
+                height,
+                weight,
+                bmi: height && weight ? Math.round((weight / (height / 100) ** 2) * 100) / 100 : 0,
                 time,
             }
+        },
+
+        getMetaNorms: (meta: ExamMeta): AllNorms => {
+            const result = { 'Sylwetka': {} };
+            result['Sylwetka']['BMI'] = Parser._getBmiNorms(meta);
+            // result['Sylwetka']['Waga'] = [{
+            //     level: '-',
+            //     min: 1,
+            //     max: 200,
+            // }];
+            return result;
+        },
+
+        _getBmiNorms: (meta: ExamMeta): NormValue[] => {
+            const baseBmiNorms = [
+                {
+                    level: '+++',
+                    max: 16,
+                },
+                {
+                    level: '++',
+                    min: 16,
+                    max: 17,
+                },
+                {
+                    level: '+',
+                    min: 17,
+                    max: 18.5,
+                },
+                {
+                    level: '-',
+                    min: 18.5,
+                    max: 25,
+                },
+                {
+                    level: '+',
+                    min: 25,
+                    max: 30,
+                },
+                {
+                    level: '++',
+                    min: 30,
+                    max: 35,
+                },
+                {
+                    level: '+++',
+                    min: 35,
+                },
+            ];
+
+            if (meta.age < 19) {
+                return [];
+            }
+            if (meta.age < 24) {
+                return baseBmiNorms;
+            }
+            let modificator = 0;
+            if (meta.age <= 34) {
+                modificator = 1;
+            } else if (meta.age <= 44) {
+                modificator = 2;
+            } else if (meta.age <= 54) {
+                modificator = 3;
+            } else if (meta.age <= 64) {
+                modificator = 4;
+            } else {
+                modificator = 5;
+            }
+            return Parser._modifyNorms(baseBmiNorms, modificator);
+        },
+
+        _modifyNorms: (norms: AllNorms, modificator: number): AllNorms => {
+            norms.map((norm: NormValue) => {
+                const newNorm: NormValue = {
+                    level: norm.level,
+                };
+                if (norm.min) {
+                    newNorm.min = norm.min + modificator;
+                }
+                if (norm.max) {
+                    newNorm.max = norm.max + modificator;
+                }
+            });
+            return norms;
         },
 
         _getNormsFromValues: (values: DataRow[]) => {
@@ -126,7 +216,6 @@ export const Parser =
             if (dataPart) {
                 return Parser._parseTableResults(mainTitle, dataPart, isFetchingNorms);
             } else {
-                // TODO: support this
                 return Parser._parseBodyComposition(htmlPart);
             }
         },

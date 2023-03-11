@@ -34,6 +34,8 @@ export class ChartService {
     private getData(title: string, labels: string[] | Date[], values: number[], norms: NormValue[]) {
         // console.log('--->>> getData norms', norms);
         const chartGradient = new ChartGradient();
+        const colorGradient = chartGradient.getGradientColor(values, norms);
+        // console.log('--->>> getData colorGradient', colorGradient);
         return {
             labels: labels,
             datasets: [
@@ -42,17 +44,17 @@ export class ChartService {
                     fill: true,
                     lineTension: 0.3,
                     backgroundColor: 'rgba(184, 185, 210, .3)',
-                    borderColor: chartGradient.getGradientColor(values, norms),
+                    borderColor: colorGradient,
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: chartGradient.getGradientColor(values, norms),
+                    pointBorderColor: colorGradient,
                     pointBackgroundColor: 'rgb(255, 255, 255)',
                     pointBorderWidth: 10,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-                    pointHoverBorderColor: chartGradient.getGradientColor(values, norms),
+                    pointHoverBorderColor: colorGradient,
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
@@ -66,11 +68,42 @@ export class ChartService {
         const minValue = Math.min(...chartDataSet.data);
         const maxValue = Math.max(...chartDataSet.data);
         const okNorm = getOkNorm(chartDataSet.norms);
-        const halfMin = okNorm.max < minValue || minValue === maxValue ? okNorm.max : minValue;
-        const halfMax = maxValue < okNorm.min || minValue === maxValue ? okNorm.min : maxValue;
-        const stepSize = (halfMax - halfMin) / 7;
-        const min = halfMin === minValue ? minValue - stepSize : halfMin;
-        const max = halfMax === maxValue ? maxValue + stepSize : halfMax;
+
+        if (!okNorm) {
+            const stepSize = (maxValue - minValue) / 7;
+            const min = minValue - stepSize;
+            const max = maxValue + stepSize;
+            return {
+                min,
+                max,
+                ticks: {
+                    stepSize,
+                }
+            }
+        }
+
+        const mi = minValue < okNorm.min ? minValue : okNorm.min;
+        const ma = maxValue > okNorm.max ? maxValue : okNorm.max;
+        const stepSize = (ma - mi) / 7;
+        const min = mi - stepSize;
+        const max = ma + stepSize;
+
+        // Wykres bez wymuszenia normy (tylko wartości + stepSize)
+        // const halfMin = okNorm.max < minValue || minValue === maxValue ? okNorm.max : minValue;
+        // const halfMax = maxValue < okNorm.min || minValue === maxValue ? okNorm.min : maxValue;
+        // const stepSize = (halfMax - halfMin) / 7;
+        // const min = halfMin === minValue ? minValue - stepSize : halfMin;
+        // const max = halfMax === maxValue ? maxValue + stepSize : halfMax;
+
+        // console.log('--->>> recountVScale ', JSON.stringify({
+        //     minValue,
+        //     maxValue,
+        //     okNorm,
+        //     stepSize,
+        //     min,
+        //     max
+        // }));
+
         return {
             min,
             max,
