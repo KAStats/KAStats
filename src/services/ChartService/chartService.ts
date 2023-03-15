@@ -2,7 +2,7 @@ import type { ChartDataSet, NormValue } from '../../types/types';
 import { getOkNorm } from '../normsUtils';
 import { CHART_COLORS } from './constants';
 import { getColorFunction } from './utils';
-import { ChartGradient } from './ChartGradient';
+import { ChartGradient } from './chartGradient';
 import { isDarkMode } from '../utils';
 
 export class ChartService {
@@ -15,6 +15,10 @@ export class ChartService {
 
     public getChartOptions(chartDataSet: ChartDataSet, from: Date, to: Date) {
         return this.getOptions(chartDataSet, from, to);
+    }
+
+    public getChartPlugins(chartDataSet: ChartDataSet, from: Date, to: Date) {
+        return this.getPlugins(chartDataSet, from, to);
     }
 
     public filterChartDataSetByTime(from: Date, to: Date, chartDataSet: ChartDataSet): ChartDataSet {
@@ -119,7 +123,10 @@ export class ChartService {
             // responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: false
+                legend: false,
+                customCanvasBackgroundColor: {
+                    color: isDarkMode() ? CHART_COLORS.darkGreyBg : CHART_COLORS.lightGreyBg,
+                }
             },
             scales: {
                 x: {
@@ -200,5 +207,19 @@ export class ChartService {
                 }
             }
         }
+    };
+
+    private getPlugins(chartDataSet: ChartDataSet, from: Date, to: Date) {
+        return [{
+            id: 'customCanvasBackgroundColor',
+            beforeDraw: (chart, args, options) => {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = options.color || CHART_COLORS.darkGreyBg;
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        }];
     };
 }

@@ -6,12 +6,12 @@
     import DateRangeSelect from './lib/DateRangeSelect.svelte';
     import ReportHeader from './lib/ReportHeader.svelte';
     import AppHelper from './lib/AppHelper.svelte';
+    import type { Dictionary } from './types/global.d.ts';
 
     let isLoaded = false;
     let from: number;
     let to: number;
-    let title = '';
-    let subTitles: string[] = [];
+    let selectedTitles: Dictionary<string[]> = {};
 
     const whenLoaded = (event) => isLoaded = true;
 
@@ -23,9 +23,8 @@
     }
 
     const whenTitleSelected = (event) => {
-        title = event.detail.title;
-        subTitles = event.detail.subTitles;
-        // console.log('---->>>> App whenTitleSelected', title, subTitles);
+        selectedTitles = event.detail.selected;
+        // console.log('---->>>> App whenTitleSelected', selectedTitles);
     }
 
     afterUpdate(() => {
@@ -34,7 +33,7 @@
 </script>
 
 <main>
-    <div>
+    <div class="app-wrapper">
         <div class="card">
             Statystyki Kwantowego Analizatora V {__APP_VERSION__}
         </div>
@@ -59,9 +58,16 @@
                 </div>
             </div>
 
-            {#each subTitles as subTitle}
-                <div class="card">
-                    <ResultChart {title} {subTitle} {from} {to}/>
+            {#each Object.keys(selectedTitles) as title}
+                <div class="card-group">
+                    <div class="card card-group-title">
+                        <h2>{title}</h2>
+                    </div>
+                    {#each selectedTitles[title] as subTitle}
+                        <div class="card">
+                            <ResultChart {title} {subTitle} {from} {to}/>
+                        </div>
+                    {/each}
                 </div>
             {/each}
         {/if}

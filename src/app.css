@@ -40,22 +40,54 @@ h1 {
     line-height: 1.1;
 }
 
+#app {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.app-wrapper {
+    min-width: 80vw;
+}
+
+.card-group {
+    position: relative;
+    margin: 2rem 1em;
+    padding: 0;
+    border: 5px solid #dedede;
+}
+
 .card {
+    position: relative;
     margin: 1em;
     padding: 1em;
-    width: 80vw;
+    /*width: 80vw;*/
     background-color: #eee;
+}
+
+.card-group .card:first-child {
+    margin-top: 0;
+}
+
+.card-group .card:last-child {
+    margin-bottom: 0;
+}
+
+.card-group .card {
+    /*width: auto;*/
+    margin-left: 0;
+    margin-right: 0;
+    /*width: calc(80vw - 10px);*/
+}
+
+.card-group-title {
+    padding: 0.01em 1em;
+    background-color: #dedede;
 }
 
 .form-control:not(:last-child) {
     padding-bottom: 1em;
-}
-
-#app {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
 }
 
 button {
@@ -83,6 +115,7 @@ mark {
     background-color: #ddd;
     padding: 0.2em 0.4em;
     border-radius: 4px;
+    white-space: nowrap;
 }
 
 @media (prefers-color-scheme: light) {
@@ -97,8 +130,16 @@ mark {
         color: #747bff;
     }
 
+    .card-group {
+        border-color: #dedede;
+    }
+
     .card {
         background-color: #eee;
+    }
+
+    .card-group-title {
+        background-color: #dedede;
     }
 
     button {
@@ -118,8 +159,16 @@ mark {
         color: #535bf2;
     }
 
+    .card-group {
+        border-color: #2f2f2f;
+    }
+
     .card {
         background-color: #202020;
+    }
+
+    .card-group-title {
+        background-color: #2f2f2f;
     }
 
     button {

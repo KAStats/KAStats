@@ -10,10 +10,13 @@ export const CHART_COLORS = {
     blue: 'rgb(54, 162, 235)',
     purple: 'rgb(153, 102, 255)',
     lightGrey: 'rgb(201, 203, 207)',
+    lightGreyBg: 'rgb(238,238,238)',
     grey: 'rgb(101, 103, 107)',
     darkGrey: 'rgb(49,49,51)',
+    darkGreyBg: 'rgb(32,32,32)',
     dark: 'rgb(33,53,71)',
-    white: 'rgb(255,255,255)'
+    white: 'rgb(255,255,255)',
+    black: 'rgb(0,0,0)'
 };
 export const NORM_LEVEL_TO_COLOR = {
     '-': CHART_COLORS.green,

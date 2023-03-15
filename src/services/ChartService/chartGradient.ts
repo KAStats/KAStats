@@ -32,7 +32,6 @@ export class ChartGradient {
             // Create the gradient because this is either the first render
             // or the size of the chart has changed
 
-
             const minNorm = norms.reduce((res, row) => {
                 if (!res && row.min && row.max) {
                     return row;
@@ -49,11 +48,6 @@ export class ChartGradient {
             // console.log('--->>> getGradient step', step);
 
             // console.log('--->>> getGradient', min, max, norms);
-            const normMids = norms
-                .map(n => (n.min && n.max) ? (n.min + n.max) / 2 : n.min || n.max)
-                .filter(v => min < v && v < max)
-                .sort();
-            // console.log('--->>> getGradient normMids', JSON.stringify(normMids));
             const normCols = norms
                 .reduce((res, n) => {
                     // console.log('--->>> getGradient reduce n', JSON.stringify(n));
