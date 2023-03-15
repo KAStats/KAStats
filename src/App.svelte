@@ -34,7 +34,7 @@
 
 <main>
     <div class="app-wrapper">
-        <div class="card">
+        <div class="card header">
             Statystyki Kwantowego Analizatora
         </div>
         {#if !isLoaded}
@@ -87,6 +87,11 @@
         right: -28px;
         font-size: 0.8em;
         color: #999;
+    }
+
+    .header {
+        font-size: 1.5em;
+        font-weight: bold;
     }
 
     .form-control {

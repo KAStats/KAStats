@@ -118,6 +118,10 @@ mark {
     white-space: nowrap;
 }
 
+select {
+    padding: 4px 6px;
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;
