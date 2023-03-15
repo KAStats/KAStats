@@ -35,7 +35,7 @@
 <main>
     <div class="app-wrapper">
         <div class="card">
-            Statystyki Kwantowego Analizatora V {__APP_VERSION__}
+            Statystyki Kwantowego Analizatora
         </div>
         {#if !isLoaded}
             <div class="card">
@@ -72,9 +72,23 @@
             {/each}
         {/if}
     </div>
+    <div class="version">v{__APP_VERSION__}</div>
 </main>
 
 <style>
+    main {
+        position: relative;
+        height: 100%;
+    }
+
+    .version {
+        position: absolute;
+        bottom: 0;
+        right: -28px;
+        font-size: 0.8em;
+        color: #999;
+    }
+
     .form-control {
         text-align: left;
     }
