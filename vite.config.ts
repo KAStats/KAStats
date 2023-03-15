@@ -9,44 +9,45 @@ export default defineConfig({
     },
     plugins: [
         svelte(),
-        VitePWA({
-            registerType: 'autoUpdate',
-            manifestFilename: 'manifest.json',
-            manifest: {
-                short_name: 'QuanStats',
-                background_color: '#242424',
-                theme_color: '#242424',
-                icons: [
-                    {
-                        src: 'icon-144x144.png',
-                        sizes: '144x144',
-                        type: 'image/png'
-                    },
-                    {
-                        src: 'icon-192x192.png',
-                        sizes: '192x192',
-                        type: 'image/png'
-                    },
-                    {
-                        src: 'icon-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png'
-                    },
-                    {
-                        src: 'icon-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'any maskable'
-                    },
-                ]
-            },
-            workbox: {
-                globPatterns: ['**/*.{js,css,html,png,json}']
-            },
-            devOptions: {
-                enabled: true
-            }
-        })
+        // Na razie wyłączone - wymaga dotestowania
+        // VitePWA({
+        //     registerType: 'autoUpdate',
+        //     manifestFilename: 'manifest.json',
+        //     manifest: {
+        //         short_name: 'QuanStats',
+        //         background_color: '#242424',
+        //         theme_color: '#242424',
+        //         icons: [
+        //             {
+        //                 src: 'icon-144x144.png',
+        //                 sizes: '144x144',
+        //                 type: 'image/png'
+        //             },
+        //             {
+        //                 src: 'icon-192x192.png',
+        //                 sizes: '192x192',
+        //                 type: 'image/png'
+        //             },
+        //             {
+        //                 src: 'icon-512x512.png',
+        //                 sizes: '512x512',
+        //                 type: 'image/png'
+        //             },
+        //             {
+        //                 src: 'icon-512x512.png',
+        //                 sizes: '512x512',
+        //                 type: 'image/png',
+        //                 purpose: 'any maskable'
+        //             },
+        //         ]
+        //     },
+        //     workbox: {
+        //         globPatterns: ['**/*.{js,css,html,png,json}']
+        //     },
+        //     devOptions: {
+        //         enabled: true
+        //     }
+        // })
     ],
 // @ts-ignore
     test: {
