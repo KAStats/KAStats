@@ -41,9 +41,7 @@
             <div class="card">
                 <DirLoader on:loaded={whenLoaded}/>
             </div>
-            <div class="card">
-                <AppHelper/>
-            </div>
+            <AppHelper/>
         {/if}
         {#if isLoaded}
             <div class="card">
