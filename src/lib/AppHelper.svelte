@@ -43,7 +43,9 @@
 
 <div class="card">
     <div class="helper-wrapper">
-        Proszę zgłaszać wszelkie problemy na stronie <a href="https://github.com/KAStats/KAStats/issues">https://github.com/KAStats/KAStats/issues</a>
+        Proszę zgłaszać wszelkie problemy na stronie
+        <a href="https://github.com/KAStats/KAStats/issues"
+           rel="noreferrer" target="_blank">https://github.com/KAStats/KAStats/issues</a>
     </div>
 </div>
 
