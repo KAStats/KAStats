@@ -30,14 +30,8 @@
 <div class="card">
     <div class="helper-wrapper">
         Aplikacja nie zapisuje żadnych danych. Wszystkie dane są przechowywane w pamięci
-        Twojej przeglądarki i ładowane na bieżąco. Aplikacja nie wysyła żadnych danych do serwera.
-    </div>
-</div>
-
-<div class="card">
-    <div class="helper-wrapper">
-        Aplikacja nie zapisuje żadnych danych. Wszystkie dane są przechowywane w pamięci
-        Twojej przeglądarki i ładowane na bieżąco. Aplikacja nie wysyła żadnych danych do serwera.
+        Twojej przeglądarki, ładowane na bieżąco i usunięte przy zamknięciu okna.
+        Aplikacja nie wysyła żadnych danych do serwera.
     </div>
 </div>
 
