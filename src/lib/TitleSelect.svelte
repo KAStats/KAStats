@@ -1,6 +1,7 @@
 <script lang="ts">
     import { DataLoader } from '../services/dataLoader';
     import { createEventDispatcher } from 'svelte';
+    import { Checkbox } from 'svelte-mui';
     import type { Dictionary } from '../types/global.d.ts';
 
     export let from: number;
@@ -78,31 +79,42 @@
     }
 </script>
 
-{#if showTitleSelect}
-    <select bind:value={title} on:change={handleSelectTitle}>
-        <option disabled selected value> -- wybierz tytuł --</option>
-        {#each Object.keys(titleStructure) as title, i}
-            <option value={title}>{title}</option>
-        {/each}
-    </select>
-    {#if showSubTitleSelect}
-        <select bind:value={subTitle} on:change={handleSelectSubTitle}
-                disabled={!titleStructure[title] || titleStructure[title].length === 0}>
-            {#each titleStructure[title] as subTitle, i}
-                <option value={subTitle}>{subTitle}</option>
+<div class="form-row">
+    {#if showTitleSelect}
+        <select bind:value={title} on:change={handleSelectTitle}>
+            <option disabled selected value> -- wybierz tytuł --</option>
+            {#each Object.keys(titleStructure) as title, i}
+                <option value={title}>{title}</option>
             {/each}
         </select>
+        {#if showSubTitleSelect}
+            <select bind:value={subTitle} on:change={handleSelectSubTitle}
+                    disabled={!titleStructure[title] || titleStructure[title].length === 0}>
+                {#each titleStructure[title] as subTitle, i}
+                    <option value={subTitle}>{subTitle}</option>
+                {/each}
+            </select>
+        {/if}
     {/if}
-{/if}
-<label>
-    <input bind:checked={onlyOff} on:change={handleOnlyOff} type=checkbox>
-    Tylko poza normą
-</label>
-<label>
-    <input bind:checked={allSubtitles} on:change={handleAllSubtitles} type=checkbox>
-    Cały dział
-</label>
-<label>
-    <input bind:checked={allTitles} on:change={handleAllTitles} type=checkbox>
-    Wszystkie wykresy
-</label>
+    <label>
+        <Checkbox bind:checked={onlyOff} class="checkbox" on:change={handleOnlyOff}>Tylko poza normą</Checkbox>
+    </label>
+    <label>
+        <Checkbox bind:checked={allSubtitles} class="checkbox" on:change={handleAllSubtitles}>Cały dział</Checkbox>
+    </label>
+    <label>
+        <Checkbox bind:checked={allTitles} class="checkbox" on:change={handleAllTitles}>Wszystkie wykresy</Checkbox>
+    </label>
+</div>
+
+<style>
+    .form-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .form-row > * {
+        margin-right: 1rem;
+    }
+</style>

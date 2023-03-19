@@ -5,10 +5,19 @@
     font-weight: 400;
 
     color-scheme: light dark;
-    color: #213547;
+    color: #000000;
     background-color: #ffffff;
-    --color: #213547;
+    --color: #000000;
+    --primary: #0BC708;
+    --primary-highlight: #0EE309;
+    --secondary: #3416C7;
+    --secondary-highlight: #421CFF;
     --background-color: #ffffff;
+    --element-background-color: #f5f5f5;
+    --element-border-color: #000000;
+
+    --date-picker-background: var(--background-color);
+    --date-picker-foreground: var(--color);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -19,12 +28,12 @@
 
 a {
     font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+    color: var(--secondary);
+    text-decoration: underline;
 }
 
 a:hover {
-    color: #747bff;
+    color: var(--secondary-highlight);
 }
 
 body {
@@ -63,7 +72,7 @@ h1 {
     margin: 1em;
     padding: 1em;
     /*width: 80vw;*/
-    background-color: #eee;
+    background-color: #f5f5f5;
 }
 
 .card-group .card:first-child {
@@ -97,13 +106,13 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #0077b6;
+    background-color: var(--primary);
     cursor: pointer;
     transition: border-color 0.25s;
 }
 
 button:hover {
-    border-color: #646cff;
+    background-color: var(--primary-highlight);
 }
 
 button:focus,
@@ -118,65 +127,73 @@ mark {
     white-space: nowrap;
 }
 
-select {
+select, input {
     padding: 4px 6px;
+    background-color: var(--background-color);
+    color: var(--color);
+    font-size: inherit;
+    border-color: var(--element-border-color) !important;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-        --color: #213547;
-        --background-color: #ffffff;
-    }
-
-    a:hover {
-        color: #747bff;
-    }
-
-    .card-group {
-        border-color: #dedede;
-    }
-
-    .card {
-        background-color: #eee;
-    }
-
-    .card-group-title {
-        background-color: #dedede;
-    }
-
-    button {
-        background-color: #0077b6;
-    }
+.checkbox svg {
+    /*color: var(--element-border-color);*/
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        color: rgba(255, 255, 255, 0.87);
-        background-color: #242424;
-        --color: rgba(255, 255, 255, 0.87);
-        --background-color: #242424;
-    }
+/*@media (prefers-color-scheme: light) {*/
+/*    :root {*/
+/*        color: #213547;*/
+/*        background-color: #ffffff;*/
+/*        --color: #213547;*/
+/*        --background-color: #ffffff;*/
+/*    }*/
 
-    a:hover {
-        color: #535bf2;
-    }
+/*    a:hover {*/
+/*        color: #747bff;*/
+/*    }*/
 
-    .card-group {
-        border-color: #2f2f2f;
-    }
+/*    .card-group {*/
+/*        border-color: #dedede;*/
+/*    }*/
 
-    .card {
-        background-color: #202020;
-    }
+/*    .card {*/
+/*        background-color: #eee;*/
+/*    }*/
 
-    .card-group-title {
-        background-color: #2f2f2f;
-    }
+/*    .card-group-title {*/
+/*        background-color: #dedede;*/
+/*    }*/
 
-    button {
-        background-color: #0077b6;
-    }
+/*    button {*/
+/*        background-color: #0077b6;*/
+/*    }*/
+/*}*/
 
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*    :root {*/
+/*        color: rgba(255, 255, 255, 0.87);*/
+/*        background-color: #242424;*/
+/*        --color: rgba(255, 255, 255, 0.87);*/
+/*        --background-color: #242424;*/
+/*    }*/
+
+/*    a:hover {*/
+/*        color: #535bf2;*/
+/*    }*/
+
+/*    .card-group {*/
+/*        border-color: #2f2f2f;*/
+/*    }*/
+
+/*    .card {*/
+/*        background-color: #202020;*/
+/*    }*/
+
+/*    .card-group-title {*/
+/*        background-color: #2f2f2f;*/
+/*    }*/
+
+/*    button {*/
+/*        background-color: #0077b6;*/
+/*    }*/
+
+/*}*/

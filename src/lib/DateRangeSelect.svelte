@@ -28,11 +28,6 @@
 </div>
 
 <style>
-    :root {
-        --date-picker-background: var(--background-color);
-        --date-picker-foreground: var(--color);
-    }
-
     .date-time-group {
         display: flex;
     }
