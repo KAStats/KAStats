@@ -58,12 +58,23 @@ export class DataLoader {
         return this.reportMetas;
     }
 
+    public getReportsAmount(): number {
+        return Object.keys(this.reportMetas).length;
+    }
+
     public getReportMetasCache(): Dictionary<ExamMeta> {
         return this.reportMetas;
     }
 
     public getFirstReportMetaCache(): ExamMeta {
         return Object.values(this.reportMetas)[0];
+    }
+
+    public getFiteredAmount(from: Date, to: Date): number {
+        const times = Object.values(this.reportMetas).map(r => r.time);
+        const fromTS = from.getTime();
+        const toTS = to.getTime();
+        return times.filter((val) => fromTS <= val && val <= toTS).length;
     }
 
     public async loadReportsFromDir(fileNames: string[]) {

@@ -2,16 +2,20 @@
     import { DateInput } from 'date-picker-svelte';
     import { afterUpdate, createEventDispatcher } from 'svelte';
     import { getDateChangedByDays } from '../services/dateUtils';
+    import { DataLoader } from '../services/dataLoader';
 
     let from = getDateChangedByDays(-21);
     let to = new Date();
 
+    const dispatch = createEventDispatcher();
+    const dataLoader = DataLoader.getInstance();
+
     $:fromMax = getDateChangedByDays(0, to);
     $:toMin = getDateChangedByDays(1, from);
-
-    const dispatch = createEventDispatcher();
+    let foundAmount = dataLoader.getFiteredAmount(from, to);
 
     afterUpdate(() => {
+        foundAmount = dataLoader.getFiteredAmount(from, to);
         dispatch('dateSelected', { from: from.getTime(), to: to.getTime() });
     });
 </script>
@@ -24,6 +28,9 @@
     <div class="date-time-control">
         <div class="date-time-label">Do:</div>
         <DateInput bind:min={toMin} bind:value={to} format="yyyy-MM-dd"/>
+    </div>
+    <div>
+        Wybrano raportów: {foundAmount}
     </div>
 </div>
 

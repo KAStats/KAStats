@@ -81,14 +81,14 @@
 
 <div class="form-row">
     {#if showTitleSelect}
-        <select bind:value={title} on:change={handleSelectTitle}>
+        <select bind:value={title} on:change={handleSelectTitle} class="title-select">
             <option disabled selected value> -- wybierz tytuł --</option>
             {#each Object.keys(titleStructure) as title, i}
                 <option value={title}>{title}</option>
             {/each}
         </select>
         {#if showSubTitleSelect}
-            <select bind:value={subTitle} on:change={handleSelectSubTitle}
+            <select bind:value={subTitle} on:change={handleSelectSubTitle} class="subtitle-select"
                     disabled={!titleStructure[title] || titleStructure[title].length === 0}>
                 {#each titleStructure[title] as subTitle, i}
                     <option value={subTitle}>{subTitle}</option>
@@ -109,12 +109,21 @@
 
 <style>
     .form-row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        /*display: flex;*/
+        /*flex-direction: row;*/
+        /*align-items: center;*/
     }
 
     .form-row > * {
         margin-right: 1rem;
+        display: inline-block;
+    }
+
+    .title-select {
+        min-width: 295px;
+    }
+
+    .subtitle-select {
+        min-width: 340px;
     }
 </style>
