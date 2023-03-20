@@ -15,6 +15,7 @@
     --background-color: #ffffff;
     --element-background-color: #f5f5f5;
     --element-border-color: #000000;
+    --error-background-color: #C72B12;
 
     --date-picker-background: var(--background-color);
     --date-picker-foreground: var(--color);
@@ -135,8 +136,16 @@ select, input {
     border-color: var(--element-border-color) !important;
 }
 
-.checkbox svg {
-    /*color: var(--element-border-color);*/
+.snackbar {
+    border-radius: 8px !important;
+}
+
+.snackbar.error {
+    background-color: var(--error-background-color) !important;
+}
+
+.snackbar-close {
+    color: var(--background-color) !important;
 }
 
 /*@media (prefers-color-scheme: light) {*/

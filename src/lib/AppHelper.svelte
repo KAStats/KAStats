@@ -21,10 +21,10 @@
         <p>
             Następnie w Analizatorze kliknij przycisk
             <mark>Otwórz katalog z raportami</mark>
-            i wybierz katalog, w którym znajdują się raporty.<br/>
-            <img alt="Wybór katalogu z raportami" src="./images/folder_select.png"/><br/>
-            Po wybraniu katalogu potwierdź dostęp aplikacji do plików.<br/>
-            <img alt="Potwiedzenie dostępu" src="./images/confirm_access.png"/><br/>
+            i wybierz katalog, w którym znajdują się raporty:<br/><br/>
+            <img alt="Wybór katalogu z raportami" src="./images/folder_select.png"/><br/><br/>
+            Po wybraniu katalogu potwierdź dostęp aplikacji do plików:<br/><br/>
+            <img alt="Potwiedzenie dostępu" src="./images/confirm_access.png"/><br/><br/>
             Po wczytaniu aplikacja jest gotowa do przeglądania danych.
         </p>
     </div>
